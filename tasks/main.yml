@@ -1,0 +1,6 @@
+---
+# tasks file for ansible-role-win-domain-ou
+
+
+- include_tasks: inner.yml
+  loop: '{{ domain_ous }}'

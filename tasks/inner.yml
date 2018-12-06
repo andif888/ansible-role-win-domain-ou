@@ -1,0 +1,16 @@
+---
+# tasks file for ansible-role-win-domain-ou
+- name: Domain OU exists
+  win_shell: |
+    $test = ([adsi]::Exists("LDAP://OU={{ item.name }},{{ item.path }}"))
+    Write-Host $test
+  register: ou_result
+  changed_when: False
+
+- debug:
+    msg: "LDAP://OU={{ item.name }},{{ item.path }} exists {{ ou_result.stdout }}"
+
+- name: Create Domain OU
+  win_shell: |
+    New-ADOrganizationalUnit -Name "{{ item.name }}" -Path "{{ item.path }}" -ProtectedFromAccidentalDeletion $false
+  when: ou_result.stdout is match("False*")

@@ -1,0 +1,4 @@
+---
+# defaults file for ansible-role-win-domain-ou
+domain_ous:
+  - { name: 'FSLogix', path: 'DC=domain,DC=local'}
